@@ -1,0 +1,7 @@
+misc
+build/terraform.tfstate*
+terraform.tfstate*
+*.out
+*.json
+misc/*
+.terraform*
