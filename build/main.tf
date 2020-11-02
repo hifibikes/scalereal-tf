@@ -17,6 +17,7 @@ module "s3_lambda_bucket" {
   # mandatory variables
   resource_count = 1
   environment    = "Dev"
+  bucket_acl     = "private"
 
   # optional variables
   request_payer  = "BucketOwner" 

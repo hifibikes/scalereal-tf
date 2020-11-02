@@ -33,20 +33,21 @@ locals {
 resource "aws_s3_bucket" "lambda_bucket" {
   count         = var.resource_count
   bucket        = var.bucket_name
+  region        = var.region
   bucket_prefix = var.bucket_prefix
   acl           = var.bucket_acl
   force_destroy = var.force_destroy
   request_payer = var.request_payer
 
   versioning {
-    enabled    = false
-    mfa_delete = false
+    enabled    = var.versioning_enabled
+    mfa_delete = var.versioning_mfa
   }
 
   tags = merge(
     local.tags,
     {
-      Name = "S3-Lambda-Bucket-0${index.count}"
+      Name = "S3-Lambda-Bucket-0${count.index + 1}"
     }
   )
 }
