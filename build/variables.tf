@@ -41,3 +41,15 @@ variable "department" {
   type        = string
   description = ""
 }
+
+variable "resource_owner" {
+  default     = "admins"
+  type        = string
+  description = "Name of the resource owner, dba, admin, operation, developers etc"
+}
+
+variable "technical_owner" {
+  default     = "aftab"
+  type        = string
+  description = "Name of the technical for contact"  
+}

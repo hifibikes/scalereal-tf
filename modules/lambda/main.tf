@@ -14,16 +14,23 @@
 # ================================================
 locals {
   lambda_function = "lambda_trigger"
+  handler         = "lambda_function.lambda_handler"
   archive_type    = "zip"
+  
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "Lambda-Function"
+    }
+  )
 }
-
 
 # ==========================================================
 # TERRAFORM DATA SOURCES
 # Archive python code to be executed inside lambda function
 # ===========================================================
 data "archive_file" "trigger_function" {
-  type        = local.archive_type 
+  type        = local.archive_type
   source_file = "${path.module}/scripts/${local.lambda_function}.py"
   output_path = "${path.module}/scripts/${local.lambda_function}.zip"
 }
@@ -35,14 +42,12 @@ data "archive_file" "trigger_function" {
 resource "aws_lambda_function" "s3_file_trigger" {
   count            = var.resource_count
   function_name    = var.function_name
-  role             = ""
+  role             = var.lambda_role_arn_module[count.index]
   handler          = var.handler
   memory_size      = var.memory_size
   runtime          = var.runtime
-  layers           = var.layers
-  timeout          = local.timeout
-  publish          = local.publish
-  tags             = var.tags
+  timeout          = var.timeout
+  tags             = local.tags
   source_code_hash = filebase64sha256(data.archive_file.trigger_function.output_path)
 
   depends_on = [
@@ -56,27 +61,24 @@ resource "aws_lambda_function" "s3_file_trigger" {
 # ====================================================================
 resource "aws_s3_bucket_notification" "lambda_file_trigger" {
   count     = var.resource_count
-  bucket    = aws_s3_bucket.lambda_bucket.id
+  bucket    = var.s3_bucket_id_module[count.index]
   
   lambda_function {
-    lambda_function_arn = aws_lambda_function.nonprod_lambda.arn
+    lambda_function_arn = aws_lambda_function.s3_file_trigger[count.index].arn
     events              = [
       "s3:ObjectCreated:*",
     ]
-    filter_prefix       = "file-prefix"
-    filter_suffix       = "file-extension"
   }
 }
 
-
 # ====================================================================
 # TERRAFORM LAMBDA FUNCTION PERMISSION RESOURCE
-# 
+# Lambda permission 
 # ====================================================================
 resource "aws_lambda_permission" "lambda_permission" {
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.nonprod_lambda.function_name
+  function_name = aws_lambda_function.s3_file_trigger[count.index].function_name
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::${aws_s3_bucket.lambda_bucket.id}"
+  source_arn    = var.s3_bucket_arn_module[count.index]
 }

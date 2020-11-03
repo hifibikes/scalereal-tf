@@ -16,6 +16,7 @@ locals {
     Costcenter  = var.costcenter
     Department  = title(var.department)
     Owner       = title(var.resource_owner)
+    Contact     = title(var.technical_owner)
     Managed_by  = "Terraform"
   }
 }
@@ -39,6 +40,7 @@ module "lambda_iam_role" {
   iam_description = "IAM role for lambda for s3 access"
   common_tags     = local.common_tags
 }
+
 
 # moduel "create_lambda_function" {
 #   source = "../modules/lambda"

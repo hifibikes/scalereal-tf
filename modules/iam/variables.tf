@@ -37,3 +37,9 @@ variable "policy_name" {
   type        = string
   description = ""
 }
+
+variable "common_tags" {
+  default     = {}
+  type        = map
+  description = "Common resource tags"
+}

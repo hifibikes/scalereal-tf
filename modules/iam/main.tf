@@ -13,11 +13,12 @@
 # DECLARE TERRAFORM LOCALS
 # ================================================
 locals {
-  tags = {
-    Name        = title(var.role_name)
-    Managed_by  = "Terraform"
-    Environment = "Dev" 
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = title(var.role_name)
+    }
+  )
 }
 
 # ================================================
