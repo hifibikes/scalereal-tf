@@ -15,6 +15,6 @@ output "bucket_id" {
 }
 
 output "bucket_arn" {
-  value       = aws_s3_bucket.lambda_bucket[*].id
+  value       = aws_s3_bucket.lambda_bucket[*].arn
   description = "The ARN of the bucket. Will be of format arn:aws:s3:::bucketname."
 }
