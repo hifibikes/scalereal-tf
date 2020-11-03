@@ -32,7 +32,7 @@ locals {
 # =======================================================
 resource "aws_s3_bucket" "lambda_bucket" {
   count         = var.resource_count
-  bucket        = "${var.bucket_name}-0%${count.index + 1}"
+  bucket        = "${var.bucket_name}0${count.index + 1}"
   region        = var.region
   acl           = var.bucket_acl
   force_destroy = var.force_destroy
@@ -46,7 +46,7 @@ resource "aws_s3_bucket" "lambda_bucket" {
   tags = merge(
     local.tags,
     {
-      Name = "${title(var.bucket_name)}-0${count.index + 1}"
+      Name = "${var.bucket_name}0${count.index + 1}"
     }
   )
 }

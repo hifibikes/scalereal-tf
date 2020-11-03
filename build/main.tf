@@ -24,7 +24,7 @@ locals {
 module "s3_lambda_bucket" {
   source = "../modules/s3"
   
-  bucket_name    = "lambda-s3-bucket"
+  bucket_name    = "aws1234dev-bucket"
   resource_count = local.resource_count
   environment    = "Dev"
   bucket_acl     = "private"
@@ -41,10 +41,15 @@ module "lambda_iam_role" {
   common_tags     = local.common_tags
 }
 
+module "create_lambda_function" {
+  source = "../modules/lambda"
+  
+  resource_count = local.resource_count
+  common_tags    = local.common_tags
+  runtime        = "python3.6"
 
-# moduel "create_lambda_function" {
-#   source = "../modules/lambda"
-
-#   # reference variable
-#   s3_bucket_id_module = module.bucket_id
-# }
+  # module references
+  lambda_role_arn_module = module.lambda_iam_role.iam_role_arn
+  s3_bucket_id_module    = module.s3_lambda_bucket.bucket_id
+  s3_bucket_arn_module   = module.s3_lambda_bucket.bucket_arn
+}

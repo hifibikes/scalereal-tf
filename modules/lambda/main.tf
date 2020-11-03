@@ -13,7 +13,8 @@
 # DECLARE TERRAFORM LOCALS
 # ================================================
 locals {
-  lambda_function = "lambda_trigger"
+  lambda_function = "lambda_function"
+  function_name   = "lambda_handler"
   handler         = "lambda_function.lambda_handler"
   archive_type    = "zip"
   
@@ -40,14 +41,16 @@ data "archive_file" "trigger_function" {
 # Create terraform lambda function to execute sample python function 
 # ======================================================================
 resource "aws_lambda_function" "s3_file_trigger" {
-  count            = var.resource_count
-  function_name    = var.function_name
-  role             = var.lambda_role_arn_module[count.index]
-  handler          = var.handler
-  memory_size      = var.memory_size
-  runtime          = var.runtime
-  timeout          = var.timeout
-  tags             = local.tags
+  count         = var.resource_count
+  function_name = local.lambda_function
+  role          = var.lambda_role_arn_module[count.index]
+  handler       = local.handler
+  memory_size   = var.memory_size
+  runtime       = var.runtime
+  timeout       = var.timeout
+  tags          = local.tags
+
+  filename         = data.archive_file.trigger_function.output_path
   source_code_hash = filebase64sha256(data.archive_file.trigger_function.output_path)
 
   depends_on = [
@@ -76,6 +79,7 @@ resource "aws_s3_bucket_notification" "lambda_file_trigger" {
 # Lambda permission 
 # ====================================================================
 resource "aws_lambda_permission" "lambda_permission" {
+  count         = var.resource_count
   statement_id  = "AllowS3Invoke"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.s3_file_trigger[count.index].function_name

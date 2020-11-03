@@ -10,7 +10,8 @@
  */
 
 variable "resource_count" {
-  
+  type        = number
+  description = ""
 }
 
 variable "function_name" {
@@ -45,6 +46,12 @@ variable "timeout" {
 
 variable "lambda_role_arn_module" {
   description = "IAM role attached to the Lambda Function."
+}
+
+variable "common_tags" {
+  default     = {}
+  type        = map
+  description = "Common resource tags"
 }
 
 variable "s3_bucket_id_module" {
