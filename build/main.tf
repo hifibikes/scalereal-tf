@@ -8,20 +8,36 @@
  * of individual files.......
  *
  */
-# locals {
-# }
+locals {
+  resource_count = 1
+  
+  common_tags = {
+    Environment = title(var.environment)
+    Costcenter  = var.costcenter
+    Department  = title(var.department)
+    Owner       = title(var.resource_owner)
+    Managed_by  = "Terraform"
+  }
+}
 
 module "s3_lambda_bucket" {
   source = "../modules/s3"
-
-  # mandatory variables
-  resource_count = 1
+  
+  bucket_name    = "lambda-s3-bucket"
+  resource_count = local.resource_count
   environment    = "Dev"
   bucket_acl     = "private"
+  request_payer  = "BucketOwner"
+  common_tags    = local.common_tags
+}
 
-  # optional variables
-  request_payer  = "BucketOwner" 
-
+module "lambda_iam_role" {
+  source = "../modules/iam"
+  
+  resource_count  = local.resource_count
+  role_name       = "CustomIAMRoleForLambda"
+  iam_description = "IAM role for lambda for s3 access"
+  common_tags     = local.common_tags
 }
 
 # moduel "create_lambda_function" {

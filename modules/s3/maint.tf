@@ -18,12 +18,12 @@ locals {
     "arn:aws:s3:::${var.bucket}"
   )
 
-  tags = {
-    Environment = var.environment
-    Costcenter  = "123456"
-    DepartId    = "Technology"  
-  }
-
+  tags = merge(
+    var.common_tags,
+    {
+      Resource = "S3-Bucket"
+    }
+  )
 }
 
 # =======================================================
@@ -32,9 +32,8 @@ locals {
 # =======================================================
 resource "aws_s3_bucket" "lambda_bucket" {
   count         = var.resource_count
-  bucket        = var.bucket_name
+  bucket        = "${var.bucket_name}-0%{count.index}"
   region        = var.region
-  bucket_prefix = var.bucket_prefix
   acl           = var.bucket_acl
   force_destroy = var.force_destroy
   request_payer = var.request_payer
@@ -47,7 +46,7 @@ resource "aws_s3_bucket" "lambda_bucket" {
   tags = merge(
     local.tags,
     {
-      Name = "S3-Lambda-Bucket-0${count.index + 1}"
+      Name = "${title(var.bucket_name)}-0${count.index + 1}"
     }
   )
 }

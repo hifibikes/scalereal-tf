@@ -10,8 +10,7 @@
  */
 
 provider "aws" {
-  version     = "~> 2.0"
   region      = var.region
-  access_key  = "AKIAZRWRAHKQACP7KDRV"
-  secret_key  = "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"
+  access_key  = var.access_key
+  secret_key  = var.secret_key
 }

@@ -15,13 +15,29 @@ variable "region" {
 }
 
 variable "access_key" {
-#   default     = "AKIAZRWRAHKQACP7KDRV"
   type        = string
-  description = ""
+  description = "AWS access key to authenticate to aws cloud"
 }
 
 variable "secret_key" {
-#   default     = "otYrsTTm1X+69bHuHBbeb4hxYDZLcH0l0WM6Uy6h"
+  type        = string
+  description = "AWS secret key to authenticate to aws cloud"
+}
+
+variable "environment" {
+  default     = "dev" 
+  type        = string
+  description = "Resource environment"
+}
+
+variable "costcenter" {
+  default     = "123456" 
+  type        = string
+  description = "Costcenter to bear the resources cost on AWS"
+}
+
+variable "department" {
+  default     = "technology" 
   type        = string
   description = ""
 }
