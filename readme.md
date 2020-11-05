@@ -8,7 +8,7 @@ Terraform Repository to perform following actions,
 - REST API endpoint creation
 
 # PRE-REQUISITES
-Terraform 12 binary should be installed. Please follow official link for setup.
+Terraform 12 binary should be installed. Please follow [official link](https://releases.hashicorp.com/terraform/) for setup.
 
 
 # INSTRUCTION

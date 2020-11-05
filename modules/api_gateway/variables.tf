@@ -8,34 +8,26 @@
  * of individual files.......
  *
  */
-
 variable "resource_count" {
   type        = number
   description = "Number or resource count to be created by terraform"
 }
 
-variable "role_name" {
-  default     = null
+variable "api_name" {
   type        = string
-  description = "The name of the role. If omitted, Terraform will assign a random, unique name."
+  description = "Name for the rest api gateway"
 }
 
-variable "iam_description" {
-  default     = null
+variable "api_key_source" {
+  default     = "HEADER"
   type        = string
-  description = "The description of the role."
+  description = "The source of the API key for requests. Valid values are HEADER and AUTHORIZER"
 }
 
-variable "detach_policy" {
-  default     = null
-  type        = bool
-  description = "Specifies to force detaching any policies the role has before destroying it."
-}
-
-variable "policy_name" {
+variable "endpoint_type" {
   default     = null
   type        = string
-  description = ""
+  description = "Gateway endpoint, supported values, REGIONAL, EDGE & PRIVATE"
 }
 
 variable "common_tags" {
@@ -43,3 +35,4 @@ variable "common_tags" {
   type        = map
   description = "Common resource tags"
 }
+

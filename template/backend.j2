@@ -1,0 +1,22 @@
+/**
+ * 
+ * 
+ * Copyright 2020 ITWox Inc.
+ * 
+ * All rights reserved in ITWox Inc. authored and generated code, including the
+ * selection and arrangement of the source code base regardless of the authorship
+ * of individual files.......
+ *
+ */
+{%- set backend_bucket = bucket|default('scalereal-terraform-state') %}
+{%- set backend_key = key|default('scalereal-app') %}
+{%- set backend_env = env|default('dev') %}
+{%- set tf_region = tf_region|default('us-east-1') %}
+
+terraform {
+  backend "s3" {
+    bucket = "{{ backend_bucket }}" 
+    key    = "{{ backend_key }}/{{ backend_env }}.tfstate"
+    region = "{{ tf_region }}"
+  }
+}

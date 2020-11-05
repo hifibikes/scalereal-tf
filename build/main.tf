@@ -83,3 +83,11 @@ module "dynamodb_table" {
 
 }
 
+module "rest_api" {
+  source = "../modules/api_gateway"
+
+  resource_count = local.resource_count
+  api_name       = "DynamoCRUDOperationAPI"
+  endpoint_type  = "REGIONAL"
+
+}
