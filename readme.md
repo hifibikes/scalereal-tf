@@ -13,7 +13,7 @@ Terraform 12 binary should be installed. Please follow official link for setup.
 
 # INSTRUCTION
 
-## Root module is present under `./build` directory
+### Root module is present under `./build` directory
 - Clone the repository 
 ```
 git clone https://github.com/iamaftabshaikh/scalereal-tf.git
