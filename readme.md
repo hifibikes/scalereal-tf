@@ -24,9 +24,9 @@ Terraform 12 binary should be installed. Please follow [official link](https://r
 Terraform backend states are maintaned remotely in S3, update bucket informatio in `./build/backend.tf` file.
 Replace below values
  
- bucket = "scalereal-terraform-state" 
- key    = "dev/scalereal-app.tfstate"
- region = "us-east-1"
+ - bucket = "scalereal-terraform-state" 
+ - key    = "dev/scalereal-app.tfstate"
+ - region = "us-east-1"
 
 # INSTRUCTION
 
