@@ -41,6 +41,16 @@ module "dynamodb_table" {
 |------|---------|
 | aws | >= 2.52, < 4.0 |
 
+## Inputs
+
+No input.
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| this\_dynamodb\_table\_arn | ARN of the DynamoDB table |
+| this\_dynamodb\_table\_id | ID of the DynamoDB table |
 
 ## Authors
 
