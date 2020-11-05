@@ -49,18 +49,6 @@ variable "write_capacity" {
   description = "The number of write units for this table. If the billing_mode is PROVISIONED, this field should be greater than 0"
 }
 
-variable "stream_enabled" {
-  default     = false
-  type        = bool
-  description = "Enable DynamoDB streams."
-}
-
-variable "stream_view_type" {
-  default     = ""
-  type        = string
-  description = "When an item in the table is modified, what information is written to the stream"
-}
-
 variable "ttl_enabled" {
   default     = false
   type        = bool
@@ -68,29 +56,27 @@ variable "ttl_enabled" {
 }
 
 variable "ttl_attribute_name" {
-  default     = ""
   type        = string
   description = "The name of the table attribute to store the TTL timestamp in"
 }
 
-/*
 variable "attributes" {
-  default     = null
-  type        = string
   description = ""
 }
 
-variable "global_secondary_indexes" {
-  default     = null
+variable "projection_type" {
+  default     = "INCLUDE"
   type        = string
-  description = ""
+  description = "Allowed values - ALL, INCLUDE or KEYS_ONLY"
 }
 
-variable "timeouts" {
-  default     = null
+variable "gsi_name" {
   type        = string
-  description = ""
+  description = "The name of the globa secondary index"
 }
-*/
 
-
+variable "common_tags" {
+  default     = {}
+  type        = map
+  description = "Common resource tags"
+}

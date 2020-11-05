@@ -8,12 +8,10 @@
  * of individual files.......
  *
  */
+{%- set tf_region = tf_region|default() %}
 
-
-terraform {
-  backend "s3" {
-    bucket = var.backend_bucket 
-    key    = "${var.state_role}/terraform.tfstate"
-    region = var.region
-  }
+provider "aws" {
+  region      = "{{ tf_region }}"
+  access_key  = var.access_key
+  secret_key  = var.secret_key
 }

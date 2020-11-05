@@ -8,13 +8,13 @@
  * of individual files.......
  *
  */
+{%- set tf_version = tf_version|default('0.12.20') %}
+{%- set provider_version = provider_version|default('2.0') %}}
 
-output "dynamo_arn" {
-  value       = aws_dynamodb_table.dynamo_csv[*].arn
-  description = "ARN of the DynamoDB table"
-}
+terraform {
+  required_version = ">= {{ tf_version }}, < 0.14"
 
-output "dynamo_id" {
-  value       = aws_dynamodb_table.dynamo_csv[*].id
-  description = "ID of the DynamoDB table"
+  required_providers {
+    aws = "~> {{ provider_version  }}"
+  }
 }

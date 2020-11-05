@@ -23,8 +23,6 @@ resource "aws_dynamodb_table" "dynamo_csv" {
   range_key        = var.range_key
   read_capacity    = var.read_capacity
   write_capacity   = var.write_capacity
-  stream_enabled   = var.stream_enabled
-  stream_view_type = var.stream_view_type
 
   ttl {
     enabled        = var.ttl_enabled
@@ -35,35 +33,28 @@ resource "aws_dynamodb_table" "dynamo_csv" {
     for_each = var.attributes
 
     content {
-      name = attribute.value.name
       type = attribute.value.type
+      name = attribute.value.name
     }
   }
 
-  dynamic "global_secondary_index" {
-    for_each = var.global_secondary_indexes
-
-    content {
-      name               = global_secondary_index.value.name
-      hash_key           = global_secondary_index.value.hash_key
-      projection_type    = global_secondary_index.value.projection_type
-      range_key          = lookup(global_secondary_index.value, "range_key", null)
-      read_capacity      = lookup(global_secondary_index.value, "read_capacity", null)
-      write_capacity     = lookup(global_secondary_index.value, "write_capacity", null)
-      non_key_attributes = lookup(global_secondary_index.value, "non_key_attributes", null)
-    }
+  global_secondary_index {
+    name               = var.gsi_name
+    hash_key           = var.hash_key
+    range_key          = var.range_key
+    projection_type    = var.projection_type
+    read_capacity      = var.read_capacity
+    write_capacity     = var.write_capacity
+    non_key_attributes = [
+      var.hash_key
+    ]
   }
 
   tags = merge(
-    var.tags,
+    var.common_tags,
     {
-      "Name" = format("%s", var.name)
-    },
+      "Name" = title(var.name)
+    }
   )
 
-  timeouts {
-    create = lookup(var.timeouts, "create", null)
-    delete = lookup(var.timeouts, "delete", null)
-    update = lookup(var.timeouts, "update", null)
-  }
 }

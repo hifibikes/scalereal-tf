@@ -53,3 +53,15 @@ variable "technical_owner" {
   type        = string
   description = "Name of the technical for contact"  
 }
+
+variable "resource_type" {
+  default     = "scalereal-app"
+  type        = string
+  description = "Type of the resource created by terraform, app, db, lb, cfg etc."
+}
+
+variable "backend_bucket" {
+  type        = string
+  description = "AWS S3 bucket name for remote tfstate backend preservation."
+}
+

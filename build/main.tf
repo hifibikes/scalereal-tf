@@ -55,3 +55,31 @@ module "create_lambda_function" {
   s3_bucket_id_module    = module.s3_lambda_bucket.bucket_id
   s3_bucket_arn_module   = module.s3_lambda_bucket.bucket_arn
 }
+
+module "dynamodb_table" {
+  source = "../modules/dynamo"
+  
+  resource_count = local.resource_count
+  name           = "DynamoDB_CSV_Table"
+  billing_mode   = "PROVISIONED"
+  hash_key       = "Id"
+  range_key      = "First"
+  read_capacity  = 20
+  write_capacity = 20
+  gsi_name       = "UserTitleIndex"
+  common_tags    = local.common_tags
+  
+  ttl_attribute_name = "TimeToExist"
+  attributes = [
+    {
+      name = "Id"
+      type = "N"
+    },
+    {
+      name = "First"
+      type = "S"
+    }
+  ]
+
+}
+
