@@ -33,7 +33,7 @@ module "dynamodb_table" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.6, < 0.14 |
-| aws | >= 2.52, < 4.0 |
+| aws | >= 2.52 < 4.0 |
 
 ## Providers
 
