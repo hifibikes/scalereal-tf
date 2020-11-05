@@ -14,7 +14,7 @@
 # ================================================
 locals {
   lambda_function = "lambda_function"
-  function_name   = "lambda_handler"
+  function_name   = "S3CSVEventReader"
   handler         = "lambda_function.lambda_handler"
   archive_type    = "zip"
   
@@ -68,6 +68,7 @@ resource "aws_s3_bucket_notification" "lambda_file_trigger" {
   
   lambda_function {
     lambda_function_arn = aws_lambda_function.s3_file_trigger[count.index].arn
+    filter_suffix       = var.event_filter_suffix
     events              = [
       "s3:ObjectCreated:*",
     ]

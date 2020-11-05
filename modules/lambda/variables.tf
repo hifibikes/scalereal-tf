@@ -61,3 +61,9 @@ variable "s3_bucket_id_module" {
 variable "s3_bucket_arn_module" {
   description = ""
 }
+
+variable "event_filter_suffix" {
+  default     = null
+  type        = string
+  description = "Specifies object key name suffix for notification trigger"
+}

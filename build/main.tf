@@ -8,7 +8,9 @@
  * of individual files.......
  *
  */
-
+# ===========================================
+# TERRAFORM LOCAL DECLARATION
+# ===========================================
 locals {
   resource_count = 1
   
@@ -22,6 +24,10 @@ locals {
   }
 }
 
+# ====================================================================
+# TERRAFORM S3 BUCKET CREATION MODULE
+# Create S3 bucket
+# ====================================================================
 module "s3_lambda_bucket" {
   source = "../modules/s3"
   
@@ -34,6 +40,10 @@ module "s3_lambda_bucket" {
   common_tags    = local.common_tags
 }
 
+# ====================================================================
+# TERRAFORM IAM ROLE MODULE
+# Create IAM role and assign policies
+# ====================================================================
 module "lambda_iam_role" {
   source = "../modules/iam"
   
@@ -43,12 +53,17 @@ module "lambda_iam_role" {
   common_tags     = local.common_tags
 }
 
+# ====================================================================
+# TERRAFORM LAMBDA MODULE
+# Create lambda function and event trigger
+# ====================================================================
 module "create_lambda_function" {
   source = "../modules/lambda"
   
-  resource_count = local.resource_count
-  common_tags    = local.common_tags
-  runtime        = "python3.6"
+  resource_count      = local.resource_count
+  common_tags         = local.common_tags
+  runtime             = "python3.6"
+  event_filter_suffix = ".csv"
 
   # module references
   lambda_role_arn_module = module.lambda_iam_role.iam_role_arn
@@ -56,6 +71,10 @@ module "create_lambda_function" {
   s3_bucket_arn_module   = module.s3_lambda_bucket.bucket_arn
 }
 
+# ====================================================================
+# TERRAFORM DYNAMO DB MODULE
+# Create AWS DynamoDB table resource
+# ====================================================================
 module "dynamodb_table" {
   source = "../modules/dynamo"
   
@@ -83,6 +102,10 @@ module "dynamodb_table" {
 
 }
 
+# ====================================================================
+# TERRAFORM REST API GATEWAY MODULE
+# Create REST API gateway
+# ====================================================================
 module "rest_api" {
   source = "../modules/api_gateway"
 

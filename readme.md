@@ -19,14 +19,16 @@ Pending
 - Secret Manager to store credentials 
 
 # PRE-REQUISITES
-Terraform 12 binary should be installed. Please follow [official link](https://releases.hashicorp.com/terraform/) for setup.
+1. Terraform 12 binary should be installed. Please follow [official link](https://releases.hashicorp.com/terraform/) for setup.
 
-Terraform backend states are maintaned remotely in S3, update bucket informatio in `./build/backend.tf` file.
-Replace below values
- 
- - bucket = "scalereal-terraform-state" 
- - key    = "dev/scalereal-app.tfstate"
- - region = "us-east-1"
+2. Terraform service account with elevated IAM privileges to execute resource creation is required. 
+
+3. Terraform backend states are maintaned remotely in S3, update bucket informatio in `./build/backend.tf` file. Replace below values with appropriate backend information.
+``` 
+   bucket = "scalereal-terraform-state" 
+   key    = "dev/scalereal-app.tfstate"
+   region = "us-east-1"
+```
 
 # INSTRUCTION
 
