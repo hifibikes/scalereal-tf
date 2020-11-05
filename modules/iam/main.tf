@@ -43,5 +43,5 @@ resource "aws_iam_role_policy" "lambda_policy" {
   count  = var.resource_count
   name   = var.policy_name
   role   = aws_iam_role.lambda_role[count.index].id
-  policy = file("${path.module}/policies/lambda_policy.json")
+  policy = file("${path.module}/policies/lambda_csv_writer.json")
 }

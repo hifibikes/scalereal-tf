@@ -8,6 +8,7 @@
  * of individual files.......
  *
  */
+
 locals {
   resource_count = 1
   
@@ -29,6 +30,7 @@ module "s3_lambda_bucket" {
   environment    = "Dev"
   bucket_acl     = "private"
   request_payer  = "BucketOwner"
+  force_destroy  = true
   common_tags    = local.common_tags
 }
 
