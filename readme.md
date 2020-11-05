@@ -60,7 +60,7 @@ terraform validate
 terraform plan --var-file=.secret.tfvars
 ```
 
-- Upon secessfull terraform plan and validate, execute apply command
+- Upon successfully terraform plan and validate, execute apply command
 ```
 terraform apply --var-file=.secret.tfvars
 ```
