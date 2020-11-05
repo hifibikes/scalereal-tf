@@ -10,7 +10,7 @@ Terraform 0.12 or newer is supported.
 
 ```hcl
 module "dynamodb_table" {
-  source   = "terraform-aws-modules/dynamodb-table/aws"
+  source   = "../modules/dynamo/"
 
   name     = "my-table"
   hash_key = "id"
