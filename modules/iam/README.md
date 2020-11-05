@@ -10,8 +10,8 @@ Terraform 0.12 or newer is supported.
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.6, < 0.14 |
-| aws | >= 2.52, < 4.0 |
+| terraform | >= 0.12.20, < 0.14 |
+| aws | ~> 2.0
 
 ## Providers
 
