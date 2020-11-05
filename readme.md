@@ -1,11 +1,22 @@
 # INTRODUCTION
 
-Terraform Repository to perform following actions,
-- AWS S3 Bucket
-- IAM role with specified policies
+## Terraform code to perform following actions,
+
+Completed
+- AWS S3 Bucket Creation
+- IAM role with specified policies for
+  - S3 
+  - CloudWatch Logs
+  - DynamoDB
 - Lambda function to schedule Python function execution
-- Dynamo DB creation
+- Lambda S3 CSV object creation event trigger (S3 Bucekt Notification)
+- Dynamo DB table creation with 3 attributes
 - REST API endpoint creation
+
+Pending
+- Python function to read CSV and upload it to DynamoDB table.
+- Create an Authenticated(token based) Rest API endpoints that do CRUD on the records stored in DynamoDB after CSV file upload
+- Secret Manager to store credentials 
 
 # PRE-REQUISITES
 Terraform 12 binary should be installed. Please follow [official link](https://releases.hashicorp.com/terraform/) for setup.
