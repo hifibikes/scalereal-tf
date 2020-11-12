@@ -3,7 +3,7 @@ build/terraform.tfstate*
 build/*.tfvars
 terraform.tfstate*
 *.out
-*.json
+./*.json
 misc/*
 .terraform*
 build/.*
